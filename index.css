@@ -1,13 +1,13 @@
 body {
-    font-family: 'Times New Roman', Times, serif;
+    font-family: 'Baloo 2', cursive;
     background-color: aquamarine;
     padding: 20px;
 }
 
 .todo {
-    background: white;
+    background: rgb(255, 255, 255);
     padding: 20px;
-    max-width: 400px;
+    max-width: 550px;
     margin: auto;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

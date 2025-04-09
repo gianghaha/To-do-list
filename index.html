@@ -7,6 +7,7 @@
     <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2&display=swap" rel="stylesheet">
     <title>Document</title>
     <link href="index.css" rel="stylesheet">
 </head>
@@ -63,12 +64,12 @@
 
             return (
                 <div className="todo">
-                    <h2>To-do List</h2>
+                    <h2>TO_DO LIST</h2>
                     <input
                         type="text"
                         value={task}
                         onChange={(e) => setTask(e.target.value)}
-                        placeholder="nhap danh sach"
+                        placeholder="Nhập danh sách"
                         onKeyDown={handleKeyPress}
                     />
                     <button onClick={addTask}>{editIndex !== null ? "Lưu" : "Thêm"}</button>
