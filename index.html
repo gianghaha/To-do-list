@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <title>Document</title>
+    <link href="index.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id='root'></div>
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        function Todolist() {
+            const [task, setTask] = useState('');
+            const [list, setList] = useState([]);
+            const [editIndex, setEditIndex] = useState(null);
+
+            useEffect(() => {
+                const savelist = localStorage.getItem('todolist');
+                if (savelist) {
+                    setList(JSON.parse(savelist));
+                }
+            }, []);
+
+            useEffect(() => {
+                localStorage.setItem('todolist', JSON.stringify(list));
+            }, [list]);
+
+            const addTask = () => {
+                if (task.trim() === '') return;
+                if (editIndex !== null) {
+                    const updatedList = [...list];
+                    updatedList[editIndex] = task;
+                    setList(updatedList);
+                    setEditIndex(null);
+                } else {
+                    setList([...list, task]);
+                }
+
+                setTask('');
+            };
+
+            const handleKeyPress = (e) => {
+                if (e.key === 'Enter')
+                    addTask();
+            };
+
+            const deleteTask = (index) => {
+                const newList = list.filter((_, i) => i != index);
+                setList(newList);
+            }
+
+            const editTask = (index) => {
+                setTask(list[index]);
+                setEditIndex(index);
+            };
+
+            return (
+                <div className="todo">
+                    <h2>To-do List</h2>
+                    <input
+                        type="text"
+                        value={task}
+                        onChange={(e) => setTask(e.target.value)}
+                        placeholder="nhap danh sach"
+                        onKeyDown={handleKeyPress}
+                    />
+                    <button onClick={addTask}>{editIndex !== null ? "Lưu" : "Thêm"}</button>
+                    <ul>
+                        {list.map((item, index) => (
+                            <li key={index}>
+                                <span className="task-text">{item}</span>
+                                <div className="task-actions">
+                                    <button className="edit" onClick={() => editTask(index)}>Sửa</button>
+                                    <button onClick={() => deleteTask(index)}>Xóa</button>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<Todolist />);
+    </script>
+</body>
+
+</html>
